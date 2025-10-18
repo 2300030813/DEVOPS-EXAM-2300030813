@@ -3,8 +3,8 @@ services:
     container_name: mysql-db
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: Dedeepya@02
-      MYSQL_DATABASE: patientdb2
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_DATABASE: productdb
       # MYSQL_USER: klu
       # MYSQL_PASSWORD: klu
     ports:
@@ -16,13 +16,13 @@ services:
     
 
   backend:
-    image: 2300030813/docker-backend:latest
+    image: 2300030813-exam-backend:final
     container_name: springboot
     build:
-      context: ./PATIENTAPI-SPRINGBOOT
-      dockerfile: ../PATIENTAPI-SPRINGBOOT/backend.Dockerfile
+      context: ./backend-springbootapp
+      dockerfile: ../backend-springbootapp/backend.Dockerfile
     ports:
-      - "2001:2000"
+      - "2025:2000"
     depends_on:
       - mysqldb
     restart: on-failure
@@ -30,13 +30,13 @@ services:
       - springboot-mysql-net
 
   frontend:
-    image: 2300030813/docker-frontend:latest
+    image: 2300030813-exam-frontend:final
     container_name: react
     build:
-      context: ./PATIENTAPI-REACT
-      dockerfile: ../PATIENTAPI-REACT/frontend.Dockerfile
+      context: ./frontend-reactapp
+      dockerfile: ../frontend-reactapp/frontend.Dockerfile
     ports:
-      - "2002:80"
+      - "2001:80"
     depends_on:
       - backend
     restart: on-failure
